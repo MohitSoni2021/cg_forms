@@ -34,18 +34,21 @@ function PreviewPage() {
     const [isLoading, setIsLoading] = useState(true)
     const [isFormExpired, setIsFormExpired] = useState(false)
     const [postNotFound, setPostNotFound] = useState(false)
+    const [isloading, setIsloading] = useState(false)
 
     const { userId, formId } = useParams();
 
 
     const handleUserSubmit = async () => {
 
+        
         for (const question of questions) {
             if (question.required && !userResponse[question._id]) {
                 alert(`Please fill the required field: ${question.question}`)
                 return
             }
         }
+        setIsLoading(true)
 
         const serverResponse = await axios.post(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/response/SubmitForm`, {
             email: (await getFromStorage("utilityfunctions")).email,
@@ -154,7 +157,15 @@ function PreviewPage() {
             <Navbar />
 
             {
-                postNotFound ? 
+                isloading ? 
+                <div className="min-h-[calc(100vh-72px)] bg-gray-100 p-8 mt-[72px] flex items-center justify-center">
+                                <div className="flex items-center justify-center">
+                                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600"></div>
+                                </div>
+                            </div>
+                :
+                (
+                    postNotFound ? 
                 <div className="min-h-[calc(100vh-72px)] mt-[72px] flex items-center justify-center">
 
                         <motion.div
@@ -349,6 +360,7 @@ function PreviewPage() {
 
 
                     )
+                )
             }
 
         </>

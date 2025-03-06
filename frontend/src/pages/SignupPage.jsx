@@ -15,7 +15,14 @@ const SignupPage = () => {
       const user = result.user;
       saveToStorage("utilityfunctions", JSON.stringify({name:user.displayName, email:user.email, _id:user.uid}))
       const serverRes = await axios.post(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/user/create`, {name:user.displayName, email:user.email, _id:user.uid})
-      alert(`Welcome ${user.displayName}`);
+      // alert(`Welcome ${user.displayName}`);
+      console.log(serverRes.status)
+      if(serverRes.status == 200) {
+        window.history.back()
+      }
+
+      window.history.back()
+      // window.history.back();
     } catch (error) {
       console.error("Google Sign-In Error:", error);
       alert("Sign-in failed. Try again!");
