@@ -107,6 +107,14 @@ function App() {
     }
   };
 
+  useEffect(()=>{
+    (async()=>{
+      if (!(await getFromStorage("utilityfunctions"))) {
+        navigate("/signup")
+    }
+    })()
+  }, [])
+
   useEffect(() => {
     setErrormsg("")
   }, [expirationDate, expirationTime])
