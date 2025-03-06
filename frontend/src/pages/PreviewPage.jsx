@@ -42,8 +42,10 @@ function PreviewPage() {
     const handleUserSubmit = async () => {
 
         
+        console.log(userResponse)
+        
         for (const question of questions) {
-            if (question.required && !userResponse[question._id]) {
+            if (question.required && question.type !== 'boolean' && !userResponse[question._id]) {
                 alert(`Please fill the required field: ${question.question}`)
                 return
             }
