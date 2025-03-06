@@ -1,11 +1,19 @@
+import mongoose from "mongoose";
+
 const responseSchema = new mongoose.Schema({
-    formId: { type: mongoose.Schema.Types.ObjectId, ref: 'Form' },
-    answers: [
-      {
-        fieldId: mongoose.Schema.Types.ObjectId, // Reference to the form field
-        answer: { type:Array }, // Can be String or Array
-      },
-    ]
+    
+    email : {
+      type : String,
+      required : true
+    },
+    user_response : {
+      type : Object
+    },
+    form_id : {
+      type : String,
+      required : true
+    }
+
   }, {Timestamp:true});
 
   const UserResponse = mongoose.model('UserResponse', responseSchema);

@@ -8,7 +8,7 @@ const formSchema = new mongoose.Schema({
       {
         type: { type: String, enum: ['text', 'radio', 'checkbox', 'dropdown', 'short_answer', "paragraph"] },
         question: String,
-        options: [String], // For radio, checkbox, dropdown
+        options: [String],
         required: Boolean,
       },
     ],

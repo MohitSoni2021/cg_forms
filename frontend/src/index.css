@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
-  body {
-    margin: 0;
-    padding: 0;
-  }
+
+.scrollbar-hidden {
+  scrollbar-width: none;
+}
+
+
+.standard-max-width {
+  max-width: 1440px;
+  margin: 0 auto;
+}
