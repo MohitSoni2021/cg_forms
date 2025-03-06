@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { getFromStorage } from '../utils/encryptStorageutil';
@@ -8,31 +8,29 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isUserLogin, setIsUserLogin] = useState(false);
     const [username, setUsername] = useState("User");
+    const location = useLocation();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
 
     const menuItems = [
-        { label: 'Features', href: '#features' },
-        { label: 'How It Works', href: '#how-it-works' },
-        { label: 'Testimonials', href: '#testimonials' },
-        { label: 'Pricing', href: '#pricing' },
+        { label: 'home', href: '/' },
+        { label: 'dashboard', href: '/dashboard' },
+        { label: 'create', href: '/create-form' },
     ];
-
 
     useEffect(() => {
         (async () => {
             const checking = await getFromStorage("utilityfunctions");
             if (checking) {
-                console.log(checking)
                 setIsUserLogin(true)
                 setUsername(checking.name)
             } else {
                 setIsUserLogin(false)
             }
         })()
-    }, [])
+    }, [location])
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm py-4">
@@ -52,13 +50,13 @@ const Navbar = () => {
                         {/* Desktop Menu */}
                         <div className="hidden md:flex items-center space-x-6">
                             {menuItems.map((item, index) => (
-                                <a
+                                <Link
                                     key={index}
-                                    href={item.href}
+                                    to={item.href}
                                     className="text-gray-700 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-500 font-medium transition duration-300"
                                 >
                                     {item.label}
-                                </a>
+                                </Link>
                             ))}
 
                             {
@@ -97,14 +95,14 @@ const Navbar = () => {
                             >
                                 <div className="flex flex-col space-y-4">
                                     {menuItems.map((item, index) => (
-                                        <a
+                                        <Link
                                             key={index}
-                                            href={item.href}
+                                            to={item.href}
                                             className="text-gray-700 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-500 font-medium"
                                             onClick={toggleMenu}
                                         >
                                             {item.label}
-                                        </a>
+                                        </Link>
                                     ))}
 
                                     {
@@ -130,3 +128,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

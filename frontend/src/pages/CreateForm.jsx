@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { getFromStorage } from '../utils/encryptStorageutil';
+import { useNavigate } from 'react-router-dom';
 
 const questionTypes = [
   { value: 'mcq', label: 'Multiple Choice' },
@@ -22,6 +23,7 @@ function App() {
   const [errormsg, setErrormsg] = useState("")
   const [isFormCreated, setIsFormCreated] = useState(false)
   const [isloading, setIsloading] = useState(false)
+  const navigate = useNavigate()
 
   const addQuestion = () => {
     setQuestions([
@@ -96,9 +98,8 @@ function App() {
         setIsloading(true)
         const serverRes = await axios.post(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/user/${(await getFromStorage("utilityfunctions"))._id}/add-form`, formData)
         setIsFormCreated(true)
-        setTimeout(() => {
-          navigator('/dashboard')
-        }, 3000);
+
+        navigate('/dashboard')
       } catch (error) {
         console.log(error)
       }
